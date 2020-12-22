@@ -29,6 +29,8 @@ public class CartController {
 	@Autowired
 	UserRepository userRepository;
 	
+	
+	//add to cart modification needs to be done
 	@GetMapping("/addtocart/{product_id}/{user_id}")  // add to cart 
 	public List<Cart_Product> AddToCart(@PathVariable("product_id") int product_id , @PathVariable("user_id") int user_id)
 	{
@@ -40,7 +42,7 @@ public class CartController {
 	}
 	
 	
-	
+	//get the cart details
 	@GetMapping("/cart-details/{user_id}")
 	public List<Cart_Product> getCartDetails(@PathVariable("user_id")  int userId,Principal principal)
 	{
@@ -58,6 +60,8 @@ public class CartController {
 	
 	
 	
+	
+	//delete cart product
 	@DeleteMapping("/{product_id}")
 	public List<Cart_Product> DeleteCartProduct(@PathVariable("product_id") int productId ,Principal principal)
 	{
@@ -70,7 +74,52 @@ public class CartController {
 		
 	}
 	
-	//
+	
+	
+	
+	//increment quantity
+	@GetMapping("/{product_id}/{user_id}")
+	public List<Cart_Product> IncrementQuantity(@PathVariable("product_id") int productId , @PathVariable("user_id") int userId,Principal principal)
+	{
+		
+		String userName=principal.getName();
+		User user=userRepository.findByName(userName);
+		if(user.getId()!=userId)
+		{
+			System.out.println("Access Denied");
+			return null;
+		}
+		List<Cart_Product> productList=cartService.IncrementQuantity(productId,userId);
+		
+		
+		return productList;
+	}
+	
+	
+	
+	//decrement quantity
+	@DeleteMapping("/{product_id}/{user_id}")
+	public List<Cart_Product> DecrementQuantity(@PathVariable("product_id") int productId , @PathVariable("user_id") int userId,Principal principal)
+	{
+		
+		String userName=principal.getName();
+		User user=userRepository.findByName(userName);
+		if(user.getId()!=userId)
+		{
+			System.out.println("Access Denied");
+			return null;
+		}
+		List<Cart_Product> productList=cartService.DecrementQuantity(productId,userId);
+		
+		
+		return productList;
+	}
+	
+	
+	
+	
+	
+	
 
 	
 	

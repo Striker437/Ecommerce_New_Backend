@@ -85,6 +85,7 @@ public class CartService {
 			if(IsProductPresent(cartProductList1,product))
 			{
 			System.out.println("Product already exists in cart");
+			return cartProductList1;
 			}
 		
 		int total_price=cart.getTotalprice()+product.getPrice();
@@ -119,10 +120,6 @@ public class CartService {
 		
 		
 		
-		
-		
-		
-		
 		return cartProductList;
 	}
 	
@@ -132,7 +129,7 @@ public class CartService {
 	
 	
 	
-	//get cart product  from userId
+	//get cart products  from userId
 
 	public List<Cart_Product> getCartDetails(int userId) {
 		
@@ -151,9 +148,11 @@ public class CartService {
 	{
 		for(Cart_Product tempcartProduct:cartProductList1)
 		{
-			if(tempcartProduct.getName()==product.getName())
+			
+			if(tempcartProduct.getName().equalsIgnoreCase(product.getName()))
 			{
-				break;
+				
+				return true;
 			}
 		}
 		return false;
@@ -166,6 +165,8 @@ public class CartService {
 
 
 	
+	
+	//delete a cart product
 	  public List<Cart_Product> DeleteCartProduct(int productId, User user) {
 	  
 	  
@@ -177,6 +178,52 @@ public class CartService {
 	  
 	  
 	  }
+
+
+
+
+
+
+
+	public List<Cart_Product> IncrementQuantity(int productId, int userId) {
+		
+		Optional<Cart_Product> optional=cartProductRepository.findById(productId);
+		Cart_Product product=optional.get();
+		int totalQuantity=product.getQuantity()+1;
+		//product.setPrice(totalQuantity*product.getPrice());
+		product.setQuantity(totalQuantity);
+		cartProductRepository.save(product);
+		return getCartDetails(userId);
+		
+		
+	}
+
+
+
+
+
+
+
+	public List<Cart_Product> DecrementQuantity(int productId, int userId) {
+		
+		Optional<Cart_Product> optional=cartProductRepository.findById(productId);
+		Cart_Product product=optional.get();
+		int totalQuantity=product.getQuantity()-1;
+		if(totalQuantity==0)
+		cartProductRepository.deleteById(productId);     //if quantity becomes 0 then remove product from cart
+		
+		else
+		{
+		//product.setPrice(totalQuantity*product.getPrice());   //else calculate 
+		product.setQuantity(totalQuantity);
+		cartProductRepository.save(product);
+		
+		}
+		
+		return getCartDetails(userId);
+		
+		
+	}
 	 
 
 }
