@@ -21,10 +21,6 @@ public class Product {
 	@ManyToOne
 	Category category;
 	
-	/*
-	 * @ManyToOne Order order;
-	 */
-	 // @ManyToOne Cart cart;
 	 
 	public int getId() {
 		return id;

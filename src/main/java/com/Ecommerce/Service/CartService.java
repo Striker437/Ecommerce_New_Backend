@@ -168,7 +168,20 @@ public class CartService {
 	
 	//delete a cart product
 	  public List<Cart_Product> DeleteCartProduct(int productId, User user) {
-	  
+			
+			int cartid=user.getCart().getId();    //get cart id from user 
+			
+			Cart cart=cartRepository.findById(cartid).get();
+			
+			Cart_Product cartProduct=cartProductRepository.findById(productId).get();
+			
+			int subtotal=cartProduct.getPrice()*cartProduct.getQuantity();
+			
+			int TotalPrice=cart.getTotalprice()-subtotal;
+			
+			int TotalQuantity=cart.getQuantity()-cartProduct.getQuantity();
+			cart.setQuantity(TotalQuantity);
+			cart.setTotalprice(TotalPrice);
 	  
 	  cartProductRepository.deleteById(productId);
 	  
