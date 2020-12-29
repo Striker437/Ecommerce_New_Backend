@@ -1,7 +1,6 @@
 package com.Ecommerce.Service;
 
 import java.util.*;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import com.Ecommerce.Entity.Cart_Product;
 import com.Ecommerce.Entity.Order;
 import com.Ecommerce.Entity.OrderProduct;
 import com.Ecommerce.Entity.User;
+import com.Ecommerce.Repository.OrderProductRepository;
 import com.Ecommerce.Repository.OrderRepository;
 
 @Service
@@ -20,6 +20,9 @@ public class OrderService {
 	
       @Autowired
       OrderRepository orderRepository;
+      
+      @Autowired
+      OrderProductRepository  OrderProductRepository;
 
 	public List<String> saveOrder(Purchase purchase, User user) {
 		
@@ -35,7 +38,10 @@ public class OrderService {
 		}
 		order.setOrderProductList(orderProducts);
 		 for(OrderProduct temporderProduct:orderProducts) {   //set order_id for each order product in database
-			  temporderProduct.setOrder(order); }
+			  temporderProduct.setOrder(order);
+			 temporderProduct.setUser(user);
+			  
+		 }
 		 
 		 
 		 order.setUser(user); //set user id
@@ -57,6 +63,15 @@ public class OrderService {
 		//generate a random UUID Number(unique)
 		
 		return UUID.randomUUID().toString();
+	}
+
+
+	public List<OrderProduct> getOrderDeatails(User user) {
+		
+		List<OrderProduct>orderDetailsList=OrderProductRepository.findOrderByUser(user.getId());
+		
+		
+		return orderDetailsList;
 	}
 
 }

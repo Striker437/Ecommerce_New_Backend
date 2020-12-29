@@ -22,7 +22,7 @@ import com.Ecommerce.Service.ProductService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 	
 	

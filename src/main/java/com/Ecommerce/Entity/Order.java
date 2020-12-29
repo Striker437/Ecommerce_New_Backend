@@ -16,6 +16,9 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name = "orders")
 public class Order{
 	
@@ -30,9 +33,13 @@ public class Order{
 	int Totalprice;
 	int TotalQuantity;
 	
+	
+	@JsonBackReference
 	@ManyToOne 
 	User user;
 	
+	
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "order")
 	List<OrderProduct>OrderProductList=new ArrayList<>();
 

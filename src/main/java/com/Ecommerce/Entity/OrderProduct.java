@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class OrderProduct {
 	
@@ -17,8 +20,18 @@ public class OrderProduct {
     int price;
     int quantity;
     
+    
+    @JsonBackReference
     @ManyToOne
     Order order;
+       
+    
+    
+	
+	  @JsonBackReference
+	  
+	  @ManyToOne User user;
+	 
 
 	public int getId() {
 		return id;
@@ -67,6 +80,16 @@ public class OrderProduct {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
     
     
     
