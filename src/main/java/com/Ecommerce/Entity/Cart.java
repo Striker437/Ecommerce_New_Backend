@@ -33,8 +33,7 @@ public class Cart {
 	 User user;
 	
 	
-	
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "cart")
 	List<Cart_Product> productList=new ArrayList<>();
 

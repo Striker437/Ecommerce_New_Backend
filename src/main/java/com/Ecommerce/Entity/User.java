@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-public class User implements Serializable {
+public class User  {
 	
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -37,22 +37,22 @@ public class User implements Serializable {
 	String role;
 	
 	
-	  @JsonManagedReference
-	  @JsonProperty(access = Access.WRITE_ONLY)   //used to ignore the cart field in json response                                         //@JsonProperty will ignore the field when it gets parsed to JSON as a response object. (E.g. for some API call)
+	  //@JsonManagedReference
+	  //@JsonProperty(access = Access.WRITE_ONLY)   //used to ignore the cart field in json response                                         //@JsonProperty will ignore the field when it gets parsed to JSON as a response object. (E.g. for some API call)
+	  @JsonIgnore
 	  @OneToOne
 	  Cart cart;
 	  
 	  
 	
-	  @JsonManagedReference
-	  
-	  @JsonProperty(access = Access.WRITE_ONLY)
+	  //@JsonManagedReference
+	 // @JsonProperty(access = Access.WRITE_ONLY)
 	  @JsonIgnore
 	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user" ) List<OrderProduct>
 	  orderProductList=new ArrayList<>();
 	 
 	 
-	  @JsonManagedReference
+	 // @JsonManagedReference
 	  @JsonIgnore
 	  @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
 	  List<Order>Orderlist=new ArrayList<Order>();

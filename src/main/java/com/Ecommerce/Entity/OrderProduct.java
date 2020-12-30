@@ -15,22 +15,23 @@ public class OrderProduct {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+	
     String imageURL;
     String OrderTrackingNumber;
     int price;
     int quantity;
     
     
-    @JsonBackReference
+    @JsonBackReference(value = "order")
     @ManyToOne
     Order order;
        
     
     
 	
-	  @JsonBackReference
-	  
-	  @ManyToOne User user;
+	  @JsonBackReference(value="user")
+	  @ManyToOne
+	  User user;
 	 
 
 	public int getId() {
@@ -88,6 +89,10 @@ public class OrderProduct {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	
+	
+	
 	
 	
     

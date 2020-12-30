@@ -17,6 +17,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "orders")
@@ -39,7 +40,8 @@ public class Order{
 	User user;
 	
 	
-	@JsonManagedReference
+	@JsonIgnore
+	//@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "order")
 	List<OrderProduct>OrderProductList=new ArrayList<>();
 
