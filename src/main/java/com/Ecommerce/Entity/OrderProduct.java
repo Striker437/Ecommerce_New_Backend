@@ -20,7 +20,7 @@ public class OrderProduct {
     String OrderTrackingNumber;
     int price;
     int quantity;
-    
+    String name;
     
     @JsonBackReference(value = "order")
     @ManyToOne
@@ -88,6 +88,14 @@ public class OrderProduct {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

@@ -5,10 +5,13 @@ package com.Ecommerce.Controller;
 import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Ecommerce.CustomException.NoProductsException;
+import com.Ecommerce.CustomException.ProductNotFoundException;
 import com.Ecommerce.Entity.Product;
 import com.Ecommerce.Service.ProductService;
 
@@ -30,11 +35,17 @@ public class ProductController {
 	ProductService productService;
 	
 	@GetMapping("/getall")
-	public List<Product> getAllProducts(Principal principal)
+	public List<Product> getAllProducts(Principal principal) throws NoProductsException
 	{
+		String str=null;
+		str.length();
 		String username=principal.getName();
 		System.out.println("username :"+username);
 		List<Product> ProductList=productService.getAllProducts();
+		if(ProductList==null)
+			throw new NoProductsException("No product is Present");
+		
+		
 		System.out.println("Productlist");
 		return ProductList;
 		
@@ -81,9 +92,11 @@ public class ProductController {
 	
 	
 	@GetMapping("{id}")
-	public Product getAProduct(@PathVariable("id")int Id)
+	public Optional<Product> getAProduct(@PathVariable("id")int Id) throws ProductNotFoundException
 	{
-		Product product=productService.getProductDetail(Id);
+		Optional<Product> product=productService.getProductDetail(Id);
+		if(!product.isPresent())
+			throw new ProductNotFoundException("Product Not Found");
 		return product;
 	}
 
@@ -108,6 +121,7 @@ public class ProductController {
 	 * }
 	 */
  	
+	
 	
 	
 	

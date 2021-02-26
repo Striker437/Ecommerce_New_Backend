@@ -48,6 +48,10 @@ public class CartService {
 			System.out.println("CartProducts:"+cartProduct.toString());     //debug purpose
 		
 		
+		
+		
+		cartProductList1.forEach(System.out::println);
+		
 		System.out.println("Product needs to add in cart"+product);      //debug purpose
 		
 		
@@ -81,7 +85,6 @@ public class CartService {
 		else
 		{
 			
-		System.out.println("ghhggh");
 			if(IsProductPresent(cartProductList1,product))
 			{
 			System.out.println("Product already exists in cart");
@@ -146,16 +149,19 @@ public class CartService {
 	//check whether product is already present in cart or not
 	public boolean IsProductPresent(List<Cart_Product> cartProductList1, Product product)
 	{
-		for(Cart_Product tempcartProduct:cartProductList1)
-		{
-			
-			if(tempcartProduct.getName().equalsIgnoreCase(product.getName()))
-			{
-				
-				return true;
-			}
-		}
-		return false;
+		/*
+		 * for(Cart_Product tempcartProduct:cartProductList1) {
+		 * 
+		 * if(tempcartProduct.getName().equalsIgnoreCase(product.getName())) {
+		 * 
+		 * return true; } }
+		 */
+		
+		Boolean b=cartProductList1.stream()
+				                  .anyMatch(x->x.getName().equalsIgnoreCase(product.getName()));    //java stream api
+		System.out.println("check product exists in cart or not------"+b);
+		
+		return b;
 	}
 
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Ecommerce.CustomException.CategoryNotFoundException;
 import com.Ecommerce.Entity.Category;
 import com.Ecommerce.Repository.CategoryRepository;
 import com.Ecommerce.Service.CategoryService;
@@ -36,6 +37,7 @@ public class CategoryController {
 	public List<Category> getAllCategory()
 	{
 		
+		
 		List<Category> CategoryList=categoryService.getAllCategory();
 		System.out.println("Category list"+CategoryList.toString());
 		return CategoryList;
@@ -55,11 +57,13 @@ public class CategoryController {
 	
 	//get a category by id from database
 	@GetMapping("/{Id}")
-	public Category getCategoryById(@PathVariable("Id") int Id)
+	public Optional<Category> getCategoryById(@PathVariable("Id") int Id) throws CategoryNotFoundException
 	{
 		Optional<Category> optional=categoryService.getCategoryById(Id);
-		Category category=optional.get();
-		return category;
+		if(!optional.isPresent())
+			throw new CategoryNotFoundException("Category not found");
+		
+		return optional;
 	}
 	
 	//Update a category by id

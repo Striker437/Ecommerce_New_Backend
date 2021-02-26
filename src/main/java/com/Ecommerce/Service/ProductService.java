@@ -26,6 +26,8 @@ public class ProductService {
 	}
 
 	public List<Product> getProductsByCategory(int category_id) {
+	    String str=null;
+	    str.length();
 		return productRepository.findAllById(category_id);
 		
 	}
@@ -46,11 +48,11 @@ public class ProductService {
 		
 	}
 
-	public Product getProductDetail(int id) {
+	public Optional<Product> getProductDetail(int id) {
 		
 		Optional<Product> optional=productRepository.findById(id);
-		Product product=optional.get();
-		return product;
+		
+		return optional;
 	}
 
 	public List<Product> getProductsByContainingName(String keyword) {

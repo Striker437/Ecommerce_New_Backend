@@ -35,7 +35,7 @@ public class OrderController {
 	@PostMapping
 	public List<String> SaveOrder(@RequestBody Purchase purchase ,Principal principal)
 	{
-		System.out.println(purchase.getOrder().getTotalprice());
+		System.out.println("total price in controller-----------------"+purchase.getOrder().getTotalprice());
 		String userName=principal.getName();
 		User user=userRepository.findByName(userName);
 		List<String> orderTrackingNumber=orderService.saveOrder(purchase,user);

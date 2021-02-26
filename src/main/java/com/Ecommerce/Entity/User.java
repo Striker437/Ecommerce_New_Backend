@@ -32,7 +32,7 @@ public class User  {
 		this.name = name;
 	}
 	String password;
-	String address;
+	//String address;
 	int phoneno;
 	String role;
 	
@@ -48,8 +48,8 @@ public class User  {
 	  //@JsonManagedReference
 	 // @JsonProperty(access = Access.WRITE_ONLY)
 	  @JsonIgnore
-	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user" ) List<OrderProduct>
-	  orderProductList=new ArrayList<>();
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user" ) 
+	  List<OrderProduct>orderProductList=new ArrayList<>();
 	 
 	 
 	 // @JsonManagedReference
@@ -57,6 +57,11 @@ public class User  {
 	  @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
 	  List<Order>Orderlist=new ArrayList<Order>();
 	 
+	  
+	  @JsonIgnore
+	  @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	  List<Address> addressList=new ArrayList<>();
+	  
 	public int getId() {
 		return id;
 	}
@@ -69,12 +74,11 @@ public class User  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
+	/*
+	 * public String getAddress() { return address; } public void setAddress(String
+	 * address) { this.address = address; }
+	 */
 	public int getPhoneno() {
 		return phoneno;
 	}
@@ -97,6 +101,7 @@ public class User  {
 		this.cart = cart;
 	}
 	
+	@JsonIgnore
 	public List<Order> getOrderlist() {
 		return Orderlist;
 	}

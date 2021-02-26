@@ -11,13 +11,17 @@ public class ECommerceApplication {
 	
 	
 	
-	 @Bean public WebMvcConfigurer corsConfigurer() { return new
-			  WebMvcConfigurer() { public void addCorsMapping(CorsRegistry corsRegistry) {
-			  corsRegistry.addMapping("/*").allowedHeaders("*").allowedOrigins("*").
-			  allowedMethods("*").allowCredentials(true); }
-			  
-			  
-			  }; }
+	
+	/*
+	 * @Bean public WebMvcConfigurer corsConfigurer() { return new
+	 * WebMvcConfigurer() { public void addCorsMapping(CorsRegistry corsRegistry) {
+	 * corsRegistry.addMapping("/*").allowedHeaders("*").allowedOrigins("*").
+	 * allowedMethods("*").allowCredentials(true); }
+	 * 
+	 * 
+	 * }; }
+	 */
+	 
 			 
 
 	public static void main(String[] args) {
