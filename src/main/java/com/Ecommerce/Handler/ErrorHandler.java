@@ -2,11 +2,8 @@ package com.Ecommerce.Handler;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-
+import com.Ecommerce.CustomException.NoProductsException;
 import com.Ecommerce.CustomException.ProductNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +19,18 @@ public class ErrorHandler {
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	@ExceptionHandler
 	public ExceptionResponse ExceptionHandler(ProductNotFoundException exception,HttpServletRequest request)
+	{
+		ExceptionResponse errorResponse=new ExceptionResponse();
+		errorResponse.setErrorMessage(exception.getMessage());
+		errorResponse.setRequestedURI(request.getRequestURI());
+		return errorResponse;
+		
+		
+	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+	@ExceptionHandler
+	public ExceptionResponse ExceptionHandler(NoProductsException exception,HttpServletRequest request)
 	{
 		ExceptionResponse errorResponse=new ExceptionResponse();
 		errorResponse.setErrorMessage(exception.getMessage());

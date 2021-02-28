@@ -2,27 +2,26 @@ package com.Ecommerce.Controller;
 
 
 
-import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Ecommerce.CustomException.NoProductsException;
 import com.Ecommerce.CustomException.ProductNotFoundException;
 import com.Ecommerce.Entity.Product;
+import com.Ecommerce.Repository.ProductRepository;
 import com.Ecommerce.Service.ProductService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,15 +33,19 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ProductRepository productRepository;
+	
+	
+	
 	@GetMapping("/getall")
-	public List<Product> getAllProducts(Principal principal) throws NoProductsException
+	public List<Product> getAllProducts(Principal principal) throws NoProductsException, InterruptedException
 	{
-		String str=null;
-		str.length();
+		
 		String username=principal.getName();
 		System.out.println("username :"+username);
 		List<Product> ProductList=productService.getAllProducts();
-		if(ProductList==null)
+		if(ProductList.isEmpty())
 			throw new NoProductsException("No product is Present");
 		
 		
@@ -52,8 +55,9 @@ public class ProductController {
 		
 	}
 	
+	
 	@GetMapping("/getproductsbycategory/{category_id}")
-	public List<Product> getProductsByCategory(@PathVariable("category_id") int category_id)
+	public List<Product> getProductsByCategory(@PathVariable("category_id") int category_id) throws InterruptedException
 	{
 		
 		List<Product>productListbyCategory=productService.getProductsByCategory(category_id);
@@ -101,25 +105,16 @@ public class ProductController {
 	}
 
 	
-	//uploading image
-	/*
-	 * @GetMapping( value = "/getimage/{img_name}",produces =
-	 * MediaType.IMAGE_JPEG_VALUE) public @ResponseBody byte[]
-	 * getImageWithMediaType(@PathVariable("img_name") String img_name) throws
-	 * IOException {
-	 * 
-	 * InputStream in = getClass().getResourceAsStream("/images/"+img_name);
-	 * System.out.println("image upload-------"+in.toString());
-	 * //System.out.println(IOUtils.toByteArray(in).toString()); return
-	 * IOUtils.toByteArray(in); }
-	 */
 	
-	/*
-	 * @PostMapping("/getproductbyCategory") public List<Product>
-	 * getProductByCategory(@RequestBody) {
-	 * 
-	 * }
-	 */
+	@PutMapping("{id}")
+	public Product updateAProduct(@RequestBody Product product)throws ProductNotFoundException
+	{
+		if( productService.save(product)==null)
+			throw new ProductNotFoundException("Product Not Found");
+		
+		return productService.save(product);
+		
+	}
  	
 	
 	
