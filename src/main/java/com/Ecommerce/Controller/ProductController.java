@@ -38,6 +38,8 @@ public class ProductController {
 	
 	
 	
+	
+	
 	@GetMapping("/getall")
 	public List<Product> getAllProducts(Principal principal) throws NoProductsException, InterruptedException
 	{

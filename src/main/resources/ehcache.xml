@@ -5,7 +5,7 @@
          dynamicConfig="true"
          diskPersistent="true">
 
-<!--    <diskStore path="java.io.tmpdir" />-->
+   <!-- <diskStore path="java.io.tmpdir" /> -->
     <diskStore path="user.dir" />
 
     <cache name="products"
@@ -15,7 +15,7 @@
            diskSpoolBufferSizeMB="20"
            timeToIdleSeconds="3000"
            timeToLiveSeconds="6000"
-           memoryStoreEvictionPolicy="LFU"
+           memoryStoreEvictionPolicy="LRU"
            transactionalMode="off"
 
            >
@@ -30,11 +30,11 @@
            diskSpoolBufferSizeMB="20"
            timeToIdleSeconds="3000"
            timeToLiveSeconds="6000"
-           memoryStoreEvictionPolicy="LFU"
+           memoryStoreEvictionPolicy="LRU"
            transactionalMode="off"
 
            >
-        <persistence strategy="localTempSwap" />
+        <persistence strategy="localTempSwap" />   <!-- if application restarted then data will be lost data is not permanent  -->
 <!--        <persistence strategy="LOCALRESTARTABLE" />-->
     </cache>
 
