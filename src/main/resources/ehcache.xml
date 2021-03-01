@@ -37,5 +37,38 @@
         <persistence strategy="localTempSwap" />   <!-- if application restarted then data will be lost data is not permanent  -->
 <!--        <persistence strategy="LOCALRESTARTABLE" />-->
     </cache>
+    
+    
+    <cache name="search"
+           maxEntriesLocalHeap="5"
+           maxEntriesLocalDisk="10"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="3000"
+           timeToLiveSeconds="6000"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off"
+
+           >
+        <persistence strategy="localTempSwap" />
+      
+    </cache>
+    
+    
+    
+     <cache name="cart"
+           maxEntriesLocalHeap="5"
+           maxEntriesLocalDisk="10"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="3000"
+           timeToLiveSeconds="6000"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off"
+
+           >
+        <persistence strategy="localTempSwap" />
+      
+    </cache>
 
 </ehcache>

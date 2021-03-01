@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.Ecommerce.Entity.Cart;
@@ -134,6 +135,7 @@ public class CartService {
 	
 	//get cart products  from userId
 
+	@Cacheable(cacheNames = "cart")
 	public List<Cart_Product> getCartDetails(int userId) {
 		
 		User user=userRepository.findById(userId).get();
