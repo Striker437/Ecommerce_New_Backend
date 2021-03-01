@@ -5,8 +5,8 @@
          dynamicConfig="true"
          diskPersistent="true">
 
-   <!-- <diskStore path="java.io.tmpdir" /> -->
-    <diskStore path="user.dir" />
+   <diskStore path="java.io.tmpdir" />
+  <!--   <diskStore path="user.dir" /> -->
 
     <cache name="products"
            maxEntriesLocalHeap="5"

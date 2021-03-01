@@ -57,11 +57,11 @@ public class ProductService {
 		
 		
 		
-		
+		 
 		
 	}
 
-	@Cacheable(cacheNames = "products")
+	@Cacheable(cacheNames = "products", unless = "#result.price<200")   //cache only the products which have price more than 200
 	public Optional<Product> getProductDetail(int id) {
 		
 		log.info("fetch from db rpoduct details");
@@ -79,10 +79,11 @@ public class ProductService {
 	
 	
 	@CachePut(cacheNames = "products")
-	public Product save(Product product)
+	public List<Product> save(Product product)
 	{
-		return productRepository.save(product);
-		
+		log.info("fetch from db updated product");
+		productRepository.save(product);
+		return productRepository.findAll();		
 	}
 	
 	

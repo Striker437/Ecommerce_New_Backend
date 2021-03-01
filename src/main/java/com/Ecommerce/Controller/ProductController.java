@@ -109,7 +109,7 @@ public class ProductController {
 	
 	
 	@PutMapping("{id}")
-	public Product updateAProduct(@RequestBody Product product)throws ProductNotFoundException
+	public List<Product> updateAProduct(@RequestBody Product product)throws ProductNotFoundException
 	{
 		if( productService.save(product)==null)
 			throw new ProductNotFoundException("Product Not Found");
