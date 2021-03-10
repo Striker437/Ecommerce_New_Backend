@@ -1,5 +1,7 @@
 package com.Ecommerce.Entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +12,15 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Cart_Product {
+public class Cart_Product implements Serializable {
 	
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@GeneratedValue
 	@Id
 	int id;

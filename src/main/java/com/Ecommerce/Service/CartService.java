@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -137,7 +139,7 @@ public class CartService {
 
 	@Cacheable(cacheNames = "cart")
 	public List<Cart_Product> getCartDetails(int userId) {
-		
+		System.out.println("fetch from db in cartservice-----");
 		User user=userRepository.findById(userId).get();
 		int cartId=user.getCart().getId();
 	    List<Cart_Product> productList=cartProductRepository.findCartProductByCartId(cartId);
@@ -175,6 +177,7 @@ public class CartService {
 	
 	
 	//delete a cart product
+	  @CacheEvict(cacheNames = "cart")
 	  public List<Cart_Product> DeleteCartProduct(int productId, User user) {
 			
 			int cartid=user.getCart().getId();    //get cart id from user 
@@ -205,7 +208,7 @@ public class CartService {
 
 
 
-
+	  @CachePut(cacheNames = "cart")
 	public List<Cart_Product> IncrementQuantity(int productId, int userId) {
 		
 		Optional<Cart_Product> optional=cartProductRepository.findById(productId);
@@ -224,7 +227,7 @@ public class CartService {
 
 
 
-
+	@CachePut(cacheNames = "cart")
 	public List<Cart_Product> DecrementQuantity(int productId, int userId) {
 		
 		Optional<Cart_Product> optional=cartProductRepository.findById(productId);

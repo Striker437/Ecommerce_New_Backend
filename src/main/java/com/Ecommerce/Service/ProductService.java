@@ -22,7 +22,7 @@ public class ProductService {
 	ProductRepository productRepository;
 
 	
-	@Cacheable(cacheNames = "products")
+	@Cacheable(cacheNames  = "products")
 	public List<Product> getAllProducts() throws InterruptedException {
 		Thread.sleep(1000);
 		
@@ -32,7 +32,7 @@ public class ProductService {
 		
 	}
 
-	@Cacheable(cacheNames = "productsByCategory")
+	@Cacheable(cacheNames = "productsByCategory" )
 	public List<Product> getProductsByCategory(int category_id) throws InterruptedException {
 		Thread.sleep(1000);
 		log.info("fetch from db productsbycategory");
@@ -71,14 +71,14 @@ public class ProductService {
 		return optional;
 	}
 
-	@Cacheable(cacheNames = "search" , key = "#keyword")
+	@Cacheable(cacheNames = "search" )
 	public List<Product> getProductsByContainingName(String keyword) {
 		return productRepository.findByNameContaining(keyword);
 	}
 	
 	
 	
-	@CachePut(cacheNames = "products")
+	@CachePut(cacheNames = "products" )
 	public List<Product> save(Product product)
 	{
 		log.info("fetch from db updated product");
